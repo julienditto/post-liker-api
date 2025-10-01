@@ -18,7 +18,7 @@ def test_login_user(client, test_user):
     )
     login_res = Token(**res.json())
     SECRET_KEY=environ.get('SECRET_KEY')
-    ALGOIRTHM=environ.get('ALGOIRTHM')
+    ALGOIRTHM=environ.get('ALGORITHM')
     payload = jwt.decode(login_res.access_token, SECRET_KEY, algorithms=[ALGOIRTHM])
     id: str = payload.get("user_id")
     assert id == test_user["id"]
