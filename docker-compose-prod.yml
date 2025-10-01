@@ -1,0 +1,24 @@
+services:
+  api:
+    image: julienditto/fastapi
+    depends_on:
+      - postgres
+    ports:
+      - 80:8000
+    volumes:
+      - ./:/usr/src/app:ro
+    #command: uvicorn app.main:app --host 0.0.0.0 --port 8000
+    environment:
+      - SQLALCHEMY_DATABASE_URL=${SQLALCHEMY_DATABASE_URL}
+      - SECRET_KEY=${SECRET_KEY}
+      - ALGOIRTHM=${ALGOIRTHM}
+      - ACCESS_TOKEN_EXPIRE_MINUTES=${ACCESS_TOKEN_EXPIRE_MINUTES}
+  postgres:
+    image: postgres
+    environment:
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    volumes:
+      - postgres-db:/var/lib/postgresql/data
+volumes:
+  postgres-db:
