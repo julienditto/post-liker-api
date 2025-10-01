@@ -4,13 +4,15 @@ on: [push, pull_request]
 
 jobs: 
   job1:
+    environmemts:
+    - name: testing
     env:
-      SQLALCHEMY_DATABASE_URL='postgresql://postgres:Computer2012@localhost/fastapi'
-      SECRET_KEY="4107274fbf4da56f9e7900e16c4a10031930de991e0b9c5df13bdb2505ada099"
-      ALGOIRTHM="HS256"
-      ACCESS_TOKEN_EXPIRE_MINUTES=300
-      POSTGRES_DB="fastapi"
-      POSTGRES_PASSWORD="Computer2012"
+      SQLALCHEMY_DATABASE_URL: ${{secrets.SQLALCHEMY_DATABASE_URL}}
+      SECRET_KEY: ${{secrets.SECRET_KEY}}
+      ALGOIRTHM: HS256
+      ACCESS_TOKEN_EXPIRE_MINUTES: 300
+      POSTGRES_DB: ${{secrets.POSTGRES_DB}}
+      POSTGRES_PASSWORD: ${{secrets.POSTGRES_PASSWORD}}
     runs-on: ubuntu-latest
     steps:
       - name: pulling git repo
