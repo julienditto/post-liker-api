@@ -4,8 +4,8 @@ on: [push, pull_request]
 
 jobs: 
   job1:
-    environmemts:
-    - name: testing
+    environmemt:
+      - name: testing
     env:
       SQLALCHEMY_DATABASE_URL: ${{secrets.SQLALCHEMY_DATABASE_URL}}
       SECRET_KEY: ${{secrets.SECRET_KEY}}
@@ -13,6 +13,20 @@ jobs:
       ACCESS_TOKEN_EXPIRE_MINUTES: 300
       POSTGRES_DB: ${{secrets.POSTGRES_DB}}
       POSTGRES_PASSWORD: ${{secrets.POSTGRES_PASSWORD}}
+    services:
+      postgres:
+        image: postgres
+        env:
+          POSTGRES_PASSWORD: ${{secrets.POSTGRES_PASSWORD}}
+          POSTGRES_DB: ${{secrets.POSTGRES_DB}}
+          ports:
+            - 5432:5432
+          options: >-
+            --health-cmd pg_isready
+            --health-interval 10s
+            --health-timeout 5s
+            --health-retries 5
+
     runs-on: ubuntu-latest
     steps:
       - name: pulling git repo
